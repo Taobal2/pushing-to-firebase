@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { app } from "../../myFirebase";
 import firebase from "firebase/compat";
+import img from "./avatar1.jpg";
+import FadeLoader from "react-spinners/FadeLoader";
+
+// import LinearProgress from "@mui/material/LinearProgress";
+{
+  /* <LinearProgress variant="determinate" value={progress} /> */
+}
 
 const Settings = () => {
   const [name, setName] = useState("");
@@ -10,10 +17,10 @@ const Settings = () => {
   const [location, setLocation] = useState("");
   const [vocation, setVocation] = useState("");
   const [count, setCount] = useState("");
-  const [percentage, setPercentage] = useState(0.0001);
+  const [percentage, setPercentage] = useState(0);
   const [storageImage, setStorageImage] = useState("");
 
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(img);
 
   const uploadImage = async (e) => {
     const file = e.target.files[0];
@@ -66,7 +73,16 @@ const Settings = () => {
       <Wrapper>
         <Card>
           <ImageHolder>
-            <div>{percentage}</div>
+            <div>{Math.floor(percentage)}</div>
+            {Math.floor(percentage > 0 && percentage <= 99.999) ? (
+              <IconLoader>
+                <FadeLoader />
+              </IconLoader>
+            ) : null}
+
+            {Math.floor(percentage > 0 && percentage <= 99.999) ? (
+              <ImageCover />
+            ) : null}
             <Image src={image} />
             <Label htmlFor="pix">Uploade your Photo</Label>
             <LabelInput type="file" id="pix" onChange={uploadImage} />
@@ -206,10 +222,33 @@ const Label = styled.label`
 
 const Image = styled.img`
   width: 300px;
-  height: 250px;
+  height: 290px;
   border-radius: 5px;
   object-fit: cover;
   background-color: red;
+  position: relative;
+`;
+
+const ImageCover = styled.div`
+  width: 300px;
+  height: 290px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  z-index: 1;
+  top: 171px;
+`;
+
+const IconLoader = styled.div`
+  width: 300px;
+  height: 290px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`

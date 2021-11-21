@@ -31,7 +31,7 @@ const Header = () => {
         </Navigation>
         <Space />
         <Avatar>
-          <Nav to="/">
+          <Nav to="/register">
             <Icon>
               <MdLogin />
             </Icon>
